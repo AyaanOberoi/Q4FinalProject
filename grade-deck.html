@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grade deck · Business News Coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="grade">
+  <div class="site-nav-wrap">
+    <div id="nav-root" class="page-shell"></div>
+  </div>
+
+  <header class="page-header page-shell">
+    <p class="eyebrow">Quality gate</p>
+    <h1 class="page-title">Grade your slide deck before delivery day</h1>
+    <p class="page-lede">
+      Paste an outline (File → Download → Plain text or copy from speaker notes). Check the boxes honestly, run the local heuristic,
+      then copy the AI grading prompt for a second opinion from ChatGPT, Claude, or Gemini.
+    </p>
+  </header>
+
+  <main class="page-shell">
+    <section class="section">
+      <div class="grader-layout">
+        <form class="grader-form panel" id="deckForm">
+          <label>
+            Working deck title / topic tag
+            <input id="deckPresentationTitle" type="text" placeholder="AI datacenter power crunch">
+          </label>
+
+          <label>
+            Slide-by-slide outline (titles + bullets + talking points)
+            <textarea id="deckOutline" rows="16" placeholder="Slide 1 — Title card ...&#10;Slide 2 — Summary ..."></textarea>
+          </label>
+
+          <fieldset>
+            <legend>Self-audit (check what is truly on the deck)</legend>
+            <div class="checkbox-grid">
+              <label><input type="checkbox" name="deckRequirements" value="title"> Slide 1 article info</label>
+              <label><input type="checkbox" name="deckRequirements" value="summary"> Slide 2 summary</label>
+              <label><input type="checkbox" name="deckRequirements" value="background"> Slide 3 background</label>
+              <label><input type="checkbox" name="deckRequirements" value="economy"> US economy impact (Slide 4A)</label>
+              <label><input type="checkbox" name="deckRequirements" value="policy"> Regulation / law / policy (Slide 4B)</label>
+              <label><input type="checkbox" name="deckRequirements" value="global"> Global angle (Slide 4C)</label>
+              <label><input type="checkbox" name="deckRequirements" value="students"> Classmates relevance (Slide 4D)</label>
+              <label><input type="checkbox" name="deckRequirements" value="concept"> Class connection / teach new concept</label>
+              <label><input type="checkbox" name="deckRequirements" value="questions"> 2–3 discussion questions</label>
+              <label><input type="checkbox" name="deckRequirements" value="mla"> MLA works cited slide</label>
+              <label><input type="checkbox" name="deckRequirements" value="visuals"> Non-bullet graphical layouts</label>
+              <label><input type="checkbox" name="deckRequirements" value="presentation"> Timed rehearsal / speaker notes</label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Sensitive coverage</legend>
+            <label><input type="checkbox" id="deckSensitiveNote"> Topic may need trauma-informed framing</label>
+            <div id="deckSensitiveDetailsWrap" hidden>
+              <label>
+                Notes for AI + teacher follow-up
+                <textarea id="deckSensitiveDetails" rows="3" placeholder="Summarize plan co-created with instructor."></textarea>
+              </label>
+            </div>
+            <label style="margin-top:10px;"><input type="checkbox" id="deckTeacherOk"> Teacher already reviewed approach</label>
+          </fieldset>
+
+          <div class="button-row">
+            <button class="button primary" type="submit">Run heuristic grader</button>
+            <a class="button secondary" href="guide.html#slides">Open slide map</a>
+          </div>
+        </form>
+
+        <aside class="grade-panel panel" aria-live="polite">
+          <p class="eyebrow">Heuristic score</p>
+          <div class="grade-circle">
+            <span id="deckGradeScore">--</span>
+            <small>/100</small>
+          </div>
+          <h3 id="deckGradeLabel">Submit the form to preview readiness.</h3>
+          <p id="deckGradeSummary" class="muted-hint">
+            This is a rules-based estimate in your browser—pair with human feedback and the AI prompt below.
+          </p>
+          <div id="deckFeedbackList" class="feedback-list"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="prompt-stack panel">
+        <p class="eyebrow">External AI pass</p>
+        <h2>Grading prompt for ChatGPT / Claude / Gemini</h2>
+        <p class="muted-hint">Updates after you run the heuristic. Paste the entire block so the model sees both rubric + your outline.</p>
+        <textarea id="deckAiPrompt" rows="18" aria-label="AI grading prompt" placeholder="Run the heuristic to populate this block."></textarea>
+        <div class="button-row">
+          <button class="button primary" type="button" id="deckCopyAiPromptBtn">Copy grading prompt</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer page-shell">
+    <p>Need planning help first?</p>
+    <a href="plan-ai.html">Go to Plan with AI</a>
+  </footer>
+
+  <script src="js/site.js"></script>
+  <script src="js/grader-lib.js"></script>
+  <script src="js/deck-grader.js"></script>
+</body>
+</html>

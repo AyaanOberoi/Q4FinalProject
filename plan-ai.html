@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan with AI · Business News Coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="plan">
+  <div class="site-nav-wrap">
+    <div id="nav-root" class="page-shell"></div>
+  </div>
+
+  <header class="page-header page-shell">
+    <p class="eyebrow">AI workflow</p>
+    <h1 class="page-title">Plan using your favorite assistant</h1>
+    <p class="page-lede">
+      Nothing here calls OpenAI servers directly. Answer the scaffolding questions, tap <strong>Build planning prompt</strong>,
+      paste into whichever AI you trust, then iterate verbally before touching slide masters.
+    </p>
+  </header>
+
+  <main class="page-shell">
+    <section class="section">
+      <div class="plan-layout two-col-reverse">
+        <aside class="prompt-stack panel">
+          <p class="eyebrow">Ready-to-paste</p>
+          <h2>Copy / paste mega prompt</h2>
+          <p class="muted-hint">Keeps neutrality, MLA, quantitative evidence, facilitation goals explicit.</p>
+          <textarea id="planPromptOutput" rows="16" aria-label="Generated AI planning prompt"></textarea>
+          <div class="button-row">
+            <button class="button primary" type="button" id="planGeneratePrompt">Build planning prompt</button>
+            <button class="button secondary" type="button" id="planCopyPrompt">Copy to clipboard</button>
+          </div>
+        </aside>
+
+        <form class="plan-form panel" autocomplete="off" onsubmit="return false;">
+          <label>
+            Preferred name / nickname (Slide&nbsp;1)
+            <input id="planStudentName" type="text" placeholder="Ayaan O.">
+          </label>
+          <label>
+            Working headline · article title idea
+            <input id="planArticleTitle" type="text" placeholder="Fed holds rates while AI capex climbs">
+          </label>
+          <label>
+            News organization + tentative date collected
+            <input id="planSource" type="text" placeholder="Reuters • collected May 12, 2026">
+          </label>
+          <label>
+            Direct article URL <span style="font-weight:600;color:var(--muted)">(optional)</span>
+            <input id="planUrl" type="url" placeholder="https://www.reuters.com/...">
+          </label>
+          <label>
+            Story angle · why it is business-critical
+            <textarea id="planAngle" rows="3" placeholder="Summarize the angle in 4 sentences focusing on measurable impact."></textarea>
+          </label>
+          <label>
+            Classroom connections or novel concepts needed
+            <textarea id="planConcept" rows="3" placeholder="Unit 4 oligopolies • digital ad markets • capex cycles"></textarea>
+          </label>
+          <label>
+            Data + graphics already located
+            <textarea id="planData" rows="3" placeholder="BLS CPI table, Moody’s capex tracker, NOAA logistics overlay, Pew survey…"></textarea>
+          </label>
+          <label>
+            Audience rituals / tactile hook ideas (optional candy for class)
+            <textarea id="planHooks" rows="3" placeholder="Mini mock ballots, souvenir QR to dataset, glossary cards…"></textarea>
+          </label>
+          <label>
+            Starter discussion probes
+            <textarea id="planQuestions" rows="3" placeholder="Draft 3 'how might' prompts that cannot resolve yes/no."></textarea>
+          </label>
+
+          <fieldset>
+            <legend>Sensitivity + ethics checkpoints</legend>
+            <label>
+              Guidance for AI / teacher escalation
+              <textarea id="planSensitivities" rows="3" placeholder="Note sensitive angles and how already aligned with instructor."></textarea>
+            </label>
+          </fieldset>
+        </form>
+      </div>
+      <p class="muted-hint" style="margin-top:22px;">
+        Disclosure: assistants hallucinate citations. Mirror every statistic back to primary reporting or governmental datasets before placing on-slide.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer page-shell">
+    <p>After planning, export speaker notes and continue in Grade deck.</p>
+    <a href="grade-deck.html">Open deck grader</a>
+  </footer>
+
+  <script src="js/site.js"></script>
+  <script src="js/plan-ai.js"></script>
+</body>
+</html>
