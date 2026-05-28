@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CBN Survey · Business News Coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="survey">
+  <div class="site-nav-wrap">
+    <div id="nav-root" class="page-shell"></div>
+  </div>
+
+  <main class="page-shell app-screen">
+    <section class="flow-hero">
+      <p class="eyebrow">Step 1 · interest scan</p>
+      <h1 class="page-title">Tell the finder what would actually hold your attention.</h1>
+      <p class="page-lede">The AI uses this to narrow current business news into presentation-worthy article options.</p>
+      <div class="flow-steps" aria-label="CBN workflow">
+        <span class="active">Survey</span>
+        <span>Article Finder</span>
+        <span>Plan</span>
+        <span>Grade</span>
+      </div>
+    </section>
+
+    <form class="panel survey-form" id="surveyForm" autocomplete="off">
+      <label>
+        Name or nickname
+        <input name="name" type="text" placeholder="Ayaan">
+      </label>
+
+      <label>
+        What topics, companies, sports, creators, apps, or trends are you already curious about?
+        <textarea name="interests" rows="4" placeholder="NFL media deals, TikTok Shop, AI chips, sneaker resale, airlines, fast food pricing..."></textarea>
+      </label>
+
+      <fieldset>
+        <legend>Industries to search first</legend>
+        <div class="checkbox-grid">
+          <label><input type="checkbox" name="industries" value="sports business"> Sports business</label>
+          <label><input type="checkbox" name="industries" value="technology and AI"> Technology / AI</label>
+          <label><input type="checkbox" name="industries" value="entertainment and streaming"> Entertainment / streaming</label>
+          <label><input type="checkbox" name="industries" value="retail and consumer brands"> Retail / brands</label>
+          <label><input type="checkbox" name="industries" value="labor and jobs"> Labor / jobs</label>
+          <label><input type="checkbox" name="industries" value="housing and finance"> Housing / finance</label>
+          <label><input type="checkbox" name="industries" value="global trade"> Global trade</label>
+          <label><input type="checkbox" name="industries" value="climate and energy"> Energy / climate</label>
+        </div>
+      </fieldset>
+
+      <div class="form-grid">
+        <label>
+          Current-event comfort level
+          <select name="comfort">
+            <option value="">Choose one</option>
+            <option value="safe mainstream topics only">Safe mainstream topics only</option>
+            <option value="okay with policy and controversy if handled neutrally">Policy/controversy is okay if neutral</option>
+            <option value="comfortable with complex global topics">Complex global topics are okay</option>
+          </select>
+        </label>
+        <label>
+          Presentation style
+          <select name="presentationStyle">
+            <option value="">Choose one</option>
+            <option value="clean professional data story">Clean professional data story</option>
+            <option value="bold visual theme with audience interaction">Bold theme + audience interaction</option>
+            <option value="discussion-heavy and debate-friendly">Discussion-heavy</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Constraints or topics to avoid
+        <textarea name="constraints" rows="3" placeholder="Avoid trauma-heavy stories, politics-heavy topics, stories with no data, etc."></textarea>
+      </label>
+
+      <div class="form-grid">
+        <label>
+          Source preference
+          <select name="sourcePreference">
+            <option value="">No preference</option>
+            <option value="free-to-read outlets preferred">Free-to-read outlets preferred</option>
+            <option value="major business outlets preferred">Major business outlets preferred</option>
+            <option value="sports or culture outlets acceptable if credible">Sports/culture outlets okay if credible</option>
+          </select>
+        </label>
+        <label>
+          Anything your teacher already said?
+          <input name="teacherNotes" type="text" placeholder="Must be recent, avoid opinion columns, etc.">
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button class="button primary" type="submit">Continue to article finder</button>
+        <button class="button secondary" type="button" id="surveyReset">Clear saved work</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="js/site.js"></script>
+  <script src="js/cbn-storage.js"></script>
+  <script src="js/survey.js"></script>
+</body>
+</html>

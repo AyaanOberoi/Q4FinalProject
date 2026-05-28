@@ -14,16 +14,50 @@
     <div id="nav-root" class="page-shell"></div>
   </div>
 
-  <header class="page-header page-shell">
-    <p class="eyebrow">Quality gate</p>
-    <h1 class="page-title">Grade your slide deck before delivery day</h1>
-    <p class="page-lede">
-      Paste an outline (File → Download → Plain text or copy from speaker notes). Check the boxes honestly, run the local heuristic,
-      then copy the AI grading prompt for a second opinion from ChatGPT, Claude, or Gemini.
-    </p>
-  </header>
+  <main class="page-shell app-screen">
+    <section class="flow-hero compact">
+      <p class="eyebrow">Step 4 · grade + presentation polish</p>
+      <h1 class="page-title">Presentation is a huge part of the CBN. Check the deck before delivery day.</h1>
+      <p class="page-lede">
+        The rubric is not just facts on slides. Strong delivery, clear visuals, confident pacing, and clean citations can be the difference between decent and excellent.
+      </p>
+      <div class="flow-steps" aria-label="CBN workflow">
+        <span>Survey</span>
+        <span>Article Finder</span>
+        <span>Plan</span>
+        <span class="active">Grade</span>
+      </div>
+    </section>
 
-  <main class="page-shell">
+    <section class="section sample-deck-section">
+      <div class="sample-deck-copy">
+        <p class="eyebrow">100-point sample CBN</p>
+        <h2>Cowboys Chiefs CBN</h2>
+        <p>
+          This deck is baked into the site as a model presentation. Study how it uses a focused story,
+          direct statistics, business implications, class connections, questions, and citations.
+        </p>
+        <p class="presentation-callout">
+          Big reminder: presentation quality is not decoration. It is part of the grade. Rehearse your delivery,
+          reduce clutter, make your visuals readable, and be ready to explain the business logic out loud.
+        </p>
+        <a class="button primary" href="assets/sample-cbn/cowboys-chiefs-cbn-100.pptx" download>Download 100-point PPTX</a>
+      </div>
+      <div class="sample-deck-viewer panel">
+        <div class="deck-cover" aria-label="Cowboys Chiefs CBN sample deck cover">
+          <span>100</span>
+          <strong>Cowboys Chiefs CBN</strong>
+          <small>Sample deck viewer</small>
+        </div>
+        <div class="viewer-controls">
+          <button class="button secondary compact" type="button" id="sampleDeckPrev">Previous</button>
+          <span id="sampleDeckCount">-- / --</span>
+          <button class="button secondary compact" type="button" id="sampleDeckNext">Next</button>
+        </div>
+        <div id="sampleDeckTrack" class="sample-deck-track" aria-live="polite"></div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="grader-layout">
         <form class="grader-form panel" id="deckForm">
@@ -103,10 +137,11 @@
 
   <footer class="footer page-shell">
     <p>Need planning help first?</p>
-    <a href="plan-ai.html">Go to Plan with AI</a>
+    <a href="plan-ai.html">Go to planning workspace</a>
   </footer>
 
   <script src="js/site.js"></script>
+  <script src="js/deck-sample.js"></script>
   <script src="js/grader-lib.js"></script>
   <script src="js/deck-grader.js"></script>
 </body>

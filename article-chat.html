@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Finder · Business News Coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="finder">
+  <div class="site-nav-wrap">
+    <div id="nav-root" class="page-shell"></div>
+  </div>
+
+  <main class="page-shell app-screen">
+    <section class="flow-hero compact">
+      <p class="eyebrow">Step 2 · AI article finder</p>
+      <h1 class="page-title">Find 5-10 credible articles before you commit.</h1>
+      <p class="page-lede">The chatbot uses your survey, asks follow-ups when needed, and searches for current business-news options with links.</p>
+      <div class="flow-steps" aria-label="CBN workflow">
+        <span>Survey</span>
+        <span class="active">Article Finder</span>
+        <span>Plan</span>
+        <span>Grade</span>
+      </div>
+    </section>
+
+    <section class="finder-layout">
+      <div class="panel chat-panel">
+        <div class="survey-chip" id="surveySummary"></div>
+        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        <form class="chat-form" id="chatForm">
+          <input id="chatInput" type="text" placeholder="Ask for articles, add a preference, or answer a follow-up question">
+          <button class="button primary" type="submit">Find articles</button>
+        </form>
+        <p class="muted-hint" id="chatStatus">Ready.</p>
+      </div>
+
+      <aside class="panel results-panel">
+        <div class="results-head">
+          <div>
+            <p class="eyebrow">Article shortlist</p>
+            <h2>Selected: <span id="selectedCount">0</span></h2>
+          </div>
+          <button class="button secondary compact" type="button" id="requestMoreArticles">Request more</button>
+        </div>
+        <div class="article-list" id="articleList"></div>
+        <button class="button primary wide" type="button" id="goToPlan" disabled>Use selected articles on plan page</button>
+      </aside>
+    </section>
+  </main>
+
+  <script src="js/site.js"></script>
+  <script src="js/cbn-storage.js"></script>
+  <script src="js/article-chat.js"></script>
+</body>
+</html>

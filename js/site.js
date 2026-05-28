@@ -21,8 +21,10 @@
         '<nav class="nav site-nav" aria-label="Main navigation">' +
         '<a class="brand" href="index.html">Coach</a>' +
         '<div class="nav-links">' +
+        '<a href="survey.html">Survey</a>' +
+        '<a href="article-chat.html">Article Finder</a>' +
         '<a href="guide.html">Guide</a>' +
-        '<a href="plan-ai.html">Plan with AI</a>' +
+        '<a href="plan-ai.html">Plan</a>' +
         '<a href="grade-deck.html">Grade deck</a>' +
         "</div>" +
         "</nav>" +

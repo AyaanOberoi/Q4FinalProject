@@ -14,38 +14,47 @@
     <div id="nav-root" class="page-shell"></div>
   </div>
 
-  <header class="hero">
+  <header class="hero app-landing">
     <div class="hero-content page-shell">
       <div>
         <p class="eyebrow">Q4 current business news</p>
-        <h1>Nail the slideshow, rehearsal, data, discussion, citations.</h1>
+        <h1>Plan a CBN topic that is current, credible, and presentation-ready.</h1>
         <p class="hero-copy">
-          Explore the syllabus-style guide, build a mega-prompt for any AI planner you already use,
-          then paste your deck outline for heuristic scoring plus a richer AI grading draft you can paste into ChatGPT / Claude.
+          Start with your interests, let the article finder narrow the news, select the strongest options,
+          then build a slide plan that still leaves the real thinking, writing, and presenting in your hands.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="plan-ai.html">Plan with AI</a>
-          <a class="button secondary" href="grade-deck.html">Grade my deck</a>
+          <a class="button primary" href="survey.html">Start the survey</a>
+          <a class="button secondary" href="article-chat.html">Open article finder</a>
           <a class="button ghost" href="guide.html">Read the rubric</a>
         </div>
       </div>
 
       <aside class="deadline-card" aria-label="Project essentials">
-        <span class="pill">Due · June&nbsp;5 or earlier</span>
-        <h2>Non-negotiables</h2>
-        <ul>
-          <li>Seven slides answering every prompt verbatim</li>
-          <li>Credible journalism as the backbone (social only as supplemental citation)</li>
-          <li>Quantitative visuals beyond solo stock trackers</li>
-          <li>Objective facts, creative graphics, MLA sources</li>
-          <li>Touchy topics flagged with teacher first</li>
-        </ul>
+        <span class="pill">Workflow</span>
+        <h2>Survey → Finder → Plan → Grade</h2>
+        <div class="timeline-list">
+          <span>01</span><p>Answer the interest survey.</p>
+          <span>02</span><p>Chat until the AI finds 5-10 article candidates.</p>
+          <span>03</span><p>Select articles and shape a theme-backed outline.</p>
+          <span>04</span><p>Check the rubric and study the 100-point sample deck.</p>
+        </div>
       </aside>
     </div>
   </header>
 
   <main class="page-shell">
     <div class="card-grid">
+      <a class="card-link" href="survey.html">
+        <span class="card-badge">Start</span>
+        <h3>Interest survey</h3>
+        <p>Capture topics, industries, comfort level, constraints, and source preferences.</p>
+      </a>
+      <a class="card-link" href="article-chat.html">
+        <span class="card-badge">AI search</span>
+        <h3>Article finder</h3>
+        <p>Ask follow-ups, return current article cards, and save the strongest options.</p>
+      </a>
       <a class="card-link" href="guide.html">
         <span class="card-badge">Syllabus</span>
         <h3>Rubric &amp; slide map</h3>
@@ -53,35 +62,25 @@
       </a>
       <a class="card-link" href="plan-ai.html">
         <span class="card-badge">Prep</span>
-        <h3>Plan with AI</h3>
-        <p>Fills a plug-and-play prompt grounded in assignment rules.</p>
+        <h3>Planning workspace</h3>
+        <p>Turn selected articles into a theme, outline, visual ideas, and discussion probes.</p>
       </a>
       <a class="card-link" href="grade-deck.html">
         <span class="card-badge">Review</span>
-        <h3>Grade exported outline</h3>
-        <p>Checks structure + drafts a grading prompt embedding the rubric.</p>
-      </a>
-      <a class="card-link" href="examples.html">
-        <span class="card-badge">Showcase</span>
-        <h3>Strong sample decks</h3>
-        <p>Drop anonymized exemplars links or uploaded PDF placeholders.</p>
+        <h3>Grade + sample deck</h3>
+        <p>Check requirements and study the baked-in CBN presentation that earned 100.</p>
       </a>
       <a class="card-link" href="teacher-notes.html">
         <span class="card-badge">Faculty</span>
         <h3>Teacher notes</h3>
         <p>Logistics reminders, nuanced expectations, escalation paths.</p>
       </a>
-      <div class="card-link" aria-hidden="true" style="border-style: dashed; opacity: 0.92">
-        <span class="card-badge">Local only</span>
-        <h3>Always run via http.server</h3>
-        <p class="muted-hint"><code>python3 -m http.server 8080</code> keeps navigation + assets reliable.</p>
-      </div>
     </div>
   </main>
 
   <footer class="footer page-shell">
     <p>Coach site for Honors Business finale presentations.</p>
-    <a href="guide.html#slides">Slide checklist</a>
+    <a href="survey.html">Begin planning</a>
   </footer>
 
   <script src="js/site.js"></script>
