@@ -8,46 +8,79 @@
   const moreBtn = document.getElementById("requestMoreArticles");
   const planBtn = document.getElementById("goToPlan");
   const surveySummary = document.getElementById("surveySummary");
+  const setupBanner = document.getElementById("setupBanner");
+  const retryHealth = document.getElementById("retryHealth");
+  const resultsNextStep = document.getElementById("resultsNextStep");
+  const clearFinder = document.getElementById("clearFinder");
+  const transcriptPanel = document.querySelector(".transcript-panel");
 
   if (!chatLog || !window.CBNStore) return;
 
   let messages = CBNStore.getMessages();
   let articles = CBNStore.getArticles();
   let selected = CBNStore.getSelectedArticles();
+  let setupRequired = false;
   const survey = CBNStore.getSurvey();
+
+  function escapeHtml(value) {
+    return String(value || "").replace(/[&<>"']/g, function (char) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char];
+    });
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value).replace(/`/g, "&#096;");
+  }
+
+  function setStatus(text) {
+    if (status) status.textContent = text || "";
+  }
 
   function setBusy(isBusy, label) {
     document.body.classList.toggle("is-busy", isBusy);
-    if (status) status.textContent = label || "";
-    if (input) input.disabled = isBusy;
-    if (moreBtn) moreBtn.disabled = isBusy;
+    setStatus(label || "");
+    if (input) input.disabled = isBusy || setupRequired;
+    if (form) form.querySelector("button[type='submit']").disabled = isBusy || setupRequired;
+    if (moreBtn) moreBtn.disabled = isBusy || setupRequired || !articles.length;
+  }
+
+  function setSetupState(isRequired, message) {
+    setupRequired = isRequired;
+    if (setupBanner) {
+      setupBanner.hidden = !isRequired;
+      const paragraph = setupBanner.querySelector("p");
+      if (paragraph && message) paragraph.textContent = message;
+    }
+    setBusy(false, isRequired ? "Teacher/developer setup needed before live article search can run." : status.textContent);
   }
 
   function renderSurveySummary() {
     if (!surveySummary) return;
     const industries = (survey.industries || []).join(", ") || "No industries picked yet";
+    const interests = survey.interests || "No interests entered yet";
+    const style = survey.presentationStyle || "Presentation style not chosen";
     surveySummary.innerHTML =
-      "<strong>" +
-      (survey.name || "Student") +
-      "</strong><span>" +
-      industries +
-      "</span><span>" +
-      (survey.interests || "Interests not filled in yet") +
-      "</span>";
+      '<div><span>Name</span><strong>' +
+      escapeHtml(survey.name || "Student") +
+      "</strong></div><div><span>Industries</span><strong>" +
+      escapeHtml(industries) +
+      "</strong></div><div><span>Interests</span><strong>" +
+      escapeHtml(interests) +
+      "</strong></div><div><span>Style</span><strong>" +
+      escapeHtml(style) +
+      "</strong></div>";
   }
 
   function renderChat() {
+    if (transcriptPanel) transcriptPanel.hidden = messages.length === 0;
     chatLog.innerHTML = "";
-    const intro = messages.length
-      ? []
-      : [
-          {
-            role: "assistant",
-            content:
-              "I have your survey. Send one more preference if you want, or hit Find articles and I will look for credible CBN options."
-          }
-        ];
-    intro.concat(messages).forEach(function (message) {
+    if (!messages.length) {
+      chatLog.innerHTML =
+        '<div class="empty-state compact"><strong>No search yet</strong><p>Start with Find articles. If the AI needs more detail, follow-up questions will appear here.</p></div>';
+      return;
+    }
+
+    messages.forEach(function (message) {
       const node = document.createElement("article");
       node.className = "chat-message " + (message.role === "user" ? "user" : "assistant");
       node.textContent = message.content;
@@ -60,7 +93,7 @@
     articleList.innerHTML = "";
     if (!articles.length) {
       articleList.innerHTML =
-        '<p class="muted-hint">No article cards yet. Ask the finder to search once you are ready.</p>';
+        '<div class="empty-state"><strong>No article cards yet</strong><p>Next step: click Find articles. The AI will return credible options with links, business angles, theme ideas, and data suggestions.</p></div>';
     }
 
     articles.forEach(function (article) {
@@ -105,19 +138,33 @@
 
     selectedCount.textContent = String(selected.length);
     planBtn.toggleAttribute("disabled", selected.length === 0);
+    if (moreBtn) moreBtn.disabled = setupRequired || !articles.length;
+    if (resultsNextStep) {
+      resultsNextStep.textContent = selected.length
+        ? "Next step: continue to Plan when your shortlist feels strong."
+        : articles.length
+          ? "Next step: select 1-3 strong articles, then continue to Plan."
+          : "Next step: click Find articles.";
+    }
   }
 
-  function escapeHtml(value) {
-    return String(value || "").replace(/[&<>"']/g, function (char) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char];
-    });
-  }
-
-  function escapeAttr(value) {
-    return escapeHtml(value).replace(/`/g, "&#096;");
+  async function checkHealth() {
+    try {
+      const response = await fetch("/api/health");
+      const data = await response.json();
+      setSetupState(Boolean(data.setupRequired), data.message);
+      if (!data.setupRequired && !messages.length) setStatus("Next step: click Find articles.");
+    } catch (error) {
+      setSetupState(true, "Could not confirm AI setup. If this is deployed on Vercel, check OPENAI_API_KEY and redeploy.");
+    }
   }
 
   async function askFinder(userText) {
+    if (setupRequired) {
+      setStatus("Teacher/developer setup needed before live article search can run.");
+      return;
+    }
+
     const nextMessages = userText ? messages.concat([{ role: "user", content: userText }]) : messages;
     messages = nextMessages;
     CBNStore.setMessages(messages);
@@ -131,6 +178,11 @@
         body: JSON.stringify({ mode: "article", survey: survey, messages: messages, selectedArticles: selected })
       });
       const data = await response.json();
+
+      if (data.setupRequired) {
+        setSetupState(true, data.message);
+        return;
+      }
       if (!response.ok) throw new Error(data.message || data.error || "Article search failed.");
 
       if (data.assistantMessage) {
@@ -147,20 +199,17 @@
       }
       renderChat();
       renderArticles();
-      setBusy(false, data.articles && data.articles.length ? "Article cards updated." : "Answer the follow-up, then search again.");
+      setBusy(false, data.articles && data.articles.length ? "Results loaded. Select 1-3 strong articles." : "Answer the follow-up, then search again.");
     } catch (error) {
       messages = messages.concat([
         {
           role: "assistant",
-          content:
-            "I could not complete the live search yet. " +
-            error.message +
-            " If the key is missing, ask your teacher to start the server with OPENAI_API_KEY set."
+          content: "Search hit a problem: " + error.message
         }
       ]);
       CBNStore.setMessages(messages);
       renderChat();
-      setBusy(false, "Search needs attention.");
+      setBusy(false, "Search needs attention. Try again or revise the survey.");
     }
   }
 
@@ -176,6 +225,23 @@
   if (moreBtn) {
     moreBtn.addEventListener("click", function () {
       askFinder("Find more article options. Avoid repeating the articles already shown or selected.");
+    });
+  }
+
+  if (retryHealth) retryHealth.addEventListener("click", checkHealth);
+
+  if (clearFinder) {
+    clearFinder.addEventListener("click", function () {
+      messages = [];
+      articles = [];
+      selected = [];
+      CBNStore.setMessages(messages);
+      CBNStore.addArticles([]);
+      localStorage.removeItem("cbn.articleResults");
+      CBNStore.setSelectedArticles(selected);
+      renderChat();
+      renderArticles();
+      setStatus(setupRequired ? "Teacher/developer setup needed before live article search can run." : "Next step: click Find articles.");
     });
   }
 
@@ -209,4 +275,5 @@
   renderSurveySummary();
   renderChat();
   renderArticles();
+  checkHealth();
 })();

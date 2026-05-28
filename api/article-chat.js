@@ -83,14 +83,21 @@ module.exports = async function handler(req, res) {
   }
 
   if (!process.env.OPENAI_API_KEY) {
-    sendJson(res, 500, {
+    sendJson(res, 503, {
+      setupRequired: true,
       error: "Missing OPENAI_API_KEY",
-      message: "The article finder is wired up, but the server needs an OPENAI_API_KEY environment variable before it can search live articles."
+      message: "AI setup needed: add OPENAI_API_KEY in the exact Vercel project, enable it for Production and Preview, then redeploy."
     });
     return;
   }
 
-  const payload = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+  let payload;
+  try {
+    payload = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+  } catch (error) {
+    sendJson(res, 400, { error: "Invalid request", message: "The request body could not be read as JSON." });
+    return;
+  }
   const mode = payload.mode === "plan" ? "plan" : "article";
   const input = JSON.stringify(
     {

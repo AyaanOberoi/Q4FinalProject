@@ -15,10 +15,13 @@
   </div>
 
   <main class="page-shell app-screen">
-    <section class="flow-hero compact">
-      <p class="eyebrow">Step 2 · AI article finder</p>
-      <h1 class="page-title">Find 5-10 credible articles before you commit.</h1>
-      <p class="page-lede">The chatbot uses your survey, asks follow-ups when needed, and searches for current business-news options with links.</p>
+    <section class="flow-hero compact finder-hero">
+      <div>
+        <p class="eyebrow">Step 2 · article finder</p>
+        <h1 class="page-title">Find a CBN article worth presenting.</h1>
+        <p class="page-lede">Review your topic profile, search for article options, select 1-3 strong choices, then continue to Plan.</p>
+      </div>
+      <a class="button secondary compact" href="survey.html">Edit survey</a>
       <div class="flow-steps" aria-label="CBN workflow">
         <span>Survey</span>
         <span class="active">Article Finder</span>
@@ -27,28 +30,56 @@
       </div>
     </section>
 
-    <section class="finder-layout">
-      <div class="panel chat-panel">
+    <section class="setup-banner" id="setupBanner" hidden>
+      <div>
+        <strong>AI setup needed</strong>
+        <p>Add <code>OPENAI_API_KEY</code> in the exact Vercel project, enable it for Production and Preview, then redeploy. The key is never shown in the browser.</p>
+      </div>
+      <button class="button secondary compact" type="button" id="retryHealth">Check again</button>
+    </section>
+
+    <section class="finder-shell">
+      <aside class="topic-profile panel">
+        <div class="section-label-row">
+          <p class="eyebrow">Your topic profile</p>
+          <a href="survey.html">Edit</a>
+        </div>
         <div class="survey-chip" id="surveySummary"></div>
-        <div class="chat-log" id="chatLog" aria-live="polite"></div>
+      </aside>
+
+      <section class="finder-main">
+        <div class="panel search-card">
+          <p class="eyebrow">Search</p>
+          <h2>Ask for article options</h2>
+          <p class="muted-hint">Click Find articles, or add a preference like “more sports business” or “avoid politics-heavy topics.”</p>
         <form class="chat-form" id="chatForm">
           <input id="chatInput" type="text" placeholder="Ask for articles, add a preference, or answer a follow-up question">
           <button class="button primary" type="submit">Find articles</button>
         </form>
-        <p class="muted-hint" id="chatStatus">Ready.</p>
-      </div>
+          <div class="next-step" id="chatStatus">Next step: click Find articles.</div>
+        </div>
 
-      <aside class="panel results-panel">
+        <div class="panel transcript-panel">
+          <div class="section-label-row">
+            <p class="eyebrow">Conversation</p>
+            <button class="text-button" type="button" id="clearFinder">Clear</button>
+          </div>
+          <div class="chat-log" id="chatLog" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="panel results-panel">
         <div class="results-head">
           <div>
             <p class="eyebrow">Article shortlist</p>
-            <h2>Selected: <span id="selectedCount">0</span></h2>
+            <h2><span id="selectedCount">0</span> selected</h2>
           </div>
           <button class="button secondary compact" type="button" id="requestMoreArticles">Request more</button>
         </div>
         <div class="article-list" id="articleList"></div>
-        <button class="button primary wide" type="button" id="goToPlan" disabled>Use selected articles on plan page</button>
-      </aside>
+        <div class="next-step" id="resultsNextStep">Select 1-3 strong articles to unlock the Plan page.</div>
+        <button class="button primary wide" type="button" id="goToPlan" disabled>Continue to Plan</button>
+      </section>
     </section>
   </main>
 

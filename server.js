@@ -21,6 +21,19 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
+function healthPayload(runtime) {
+  const hasOpenAiKey = Boolean(process.env.OPENAI_API_KEY);
+  return {
+    ok: true,
+    runtime,
+    hasOpenAiKey,
+    setupRequired: !hasOpenAiKey,
+    message: hasOpenAiKey
+      ? "AI article search is configured."
+      : "AI setup needed: add OPENAI_API_KEY in the exact Vercel project, enable it for this environment, then redeploy."
+  };
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let body = "";
@@ -110,9 +123,10 @@ Every article must include a working URL. Prefer Reuters, AP, CNBC, WSJ, NYT, Wa
 
 async function handleArticleChat(req, res) {
   if (!process.env.OPENAI_API_KEY) {
-    sendJson(res, 500, {
+    sendJson(res, 503, {
+      setupRequired: true,
       error: "Missing OPENAI_API_KEY",
-      message: "The article finder is wired up, but the server needs an OPENAI_API_KEY environment variable before it can search live articles."
+      message: "AI setup needed: add OPENAI_API_KEY in the exact Vercel project, enable it for Production and Preview, then redeploy."
     });
     return;
   }
@@ -218,6 +232,11 @@ function serveStatic(req, res) {
 const server = http.createServer((req, res) => {
   if (req.method === "POST" && req.url === "/api/article-chat") {
     handleArticleChat(req, res);
+    return;
+  }
+
+  if (req.method === "GET" && req.url === "/api/health") {
+    sendJson(res, 200, healthPayload("local-node"));
     return;
   }
 
