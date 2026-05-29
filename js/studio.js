@@ -321,6 +321,22 @@
     renderNextStrip();
   }
 
+  function renderArticleGuidance(data) {
+    const questions = (data.followUpQuestions || [])
+      .map(function (question) {
+        return "<li>" + escapeHtml(question) + "</li>";
+      })
+      .join("");
+    $("#studioArticleOutput").innerHTML =
+      '<div class="empty-state"><strong>' +
+      escapeHtml(data.assistantMessage || "The AI needs a little more direction.") +
+      "</strong>" +
+      (questions ? "<p>Answer one of these in the search box, then try again:</p><ul>" + questions + "</ul>" : "<p>Add a more specific company, industry, trend, or business angle and search again.</p>") +
+      (data.rawNote ? '<p class="muted-hint">Raw note: ' + escapeHtml(data.rawNote) + "</p>" : "") +
+      "</div>";
+    renderSelectedTray();
+  }
+
   function renderPlan(data) {
     const out = $("#studioPlanOutput");
     if (!data) data = buildStarterPlan();
@@ -467,7 +483,11 @@
           messages: [{ role: "user", content: $("#studioArticlePrompt").value || "Find 5-10 credible CBN article options." }]
         });
         state.articles = CBNStore.addArticles(data.articles || []);
-        renderArticles();
+        if ((data.articles || []).length) {
+          renderArticles();
+        } else {
+          renderArticleGuidance(data);
+        }
         renderStarterDirection();
       } catch (error) {
         $("#studioArticleOutput").innerHTML = '<div class="empty-state error-state"><strong>Search failed</strong><p>' + escapeHtml(error.message) + "</p></div>";
