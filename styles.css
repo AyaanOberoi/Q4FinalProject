@@ -1536,6 +1536,262 @@ main {
   border-color: rgba(244, 185, 66, 0.45);
 }
 
+.studio-body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.stage-app {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) minmax(260px, 340px);
+  gap: 18px;
+  height: 100vh;
+  padding: 18px;
+  position: relative;
+}
+
+.stage-app #studioHeroCanvas {
+  height: 100%;
+  inset: 0;
+  opacity: 0.42;
+  position: fixed;
+  width: 100%;
+}
+
+.stage-vignette {
+  background:
+    radial-gradient(circle at 62% 38%, rgba(61, 214, 200, 0.12), transparent 34%),
+    linear-gradient(90deg, rgba(8, 10, 13, 0.94), rgba(8, 10, 13, 0.74) 38%, rgba(8, 10, 13, 0.9)),
+    radial-gradient(circle at 50% 100%, rgba(244, 185, 66, 0.08), transparent 42%);
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 1;
+}
+
+.stage-rail,
+.stage-screen,
+.stage-context {
+  position: relative;
+  z-index: 2;
+}
+
+.stage-rail {
+  align-items: center;
+  background: rgba(15, 20, 27, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  padding: 12px;
+}
+
+.stage-dot {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 14px;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+  height: 64px;
+  justify-content: center;
+  padding: 0 8px;
+  width: 100%;
+}
+
+.stage-dot.active {
+  background: rgba(61, 214, 200, 0.14);
+  border-color: rgba(61, 214, 200, 0.45);
+  color: var(--ink);
+  box-shadow: 0 0 26px rgba(61, 214, 200, 0.14);
+}
+
+.stage-screen {
+  background: rgba(14, 18, 24, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 28px;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.46);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.stage-panel {
+  display: none;
+  height: 100%;
+  overflow: hidden;
+  padding: clamp(18px, 3vw, 34px);
+}
+
+.stage-panel.active {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.stage-panel[data-stage="start"] {
+  align-content: end;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 330px);
+  grid-template-rows: 1fr;
+  gap: 24px;
+}
+
+.start-copy {
+  align-self: center;
+  max-width: 760px;
+}
+
+.start-copy h1 {
+  font-size: clamp(3rem, 7vw, 6.8rem);
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+  margin-bottom: 18px;
+}
+
+.start-copy p:not(.eyebrow) {
+  color: rgba(242, 246, 250, 0.78);
+  font-size: clamp(1rem, 1.7vw, 1.22rem);
+  max-width: 620px;
+}
+
+.example-mini-card,
+.stage-context,
+.context-block {
+  background: rgba(18, 24, 31, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 18px;
+}
+
+.example-mini-card {
+  align-self: end;
+  padding: 22px;
+}
+
+.example-mini-card span {
+  color: var(--accent);
+  display: block;
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+.example-mini-card strong {
+  display: block;
+  font-size: 1.25rem;
+  margin-top: 12px;
+}
+
+.example-mini-card p {
+  color: var(--muted);
+}
+
+.panel-head {
+  margin-bottom: 18px;
+  max-width: 850px;
+}
+
+.panel-head h2 {
+  font-size: clamp(2rem, 4.8vw, 4.4rem);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  margin-bottom: 10px;
+}
+
+.panel-head p {
+  color: rgba(242, 246, 250, 0.72);
+}
+
+.row-head {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: none;
+}
+
+.stage-panel .studio-card {
+  align-self: start;
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+}
+
+.stage-workspace,
+.plan-stage-grid,
+.fixed-example {
+  min-height: 0;
+}
+
+.stage-workspace {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 0;
+}
+
+.stage-panel .ai-output {
+  min-height: 0;
+}
+
+.plan-stage-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(230px, 0.35fr) minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.fixed-example {
+  grid-template-columns: minmax(230px, 0.55fr) minmax(0, 1fr);
+  height: calc(100vh - 190px);
+}
+
+.fixed-example .sample-deck-viewer {
+  min-height: 0;
+  overflow: auto;
+}
+
+.stage-context {
+  display: grid;
+  gap: 14px;
+  grid-template-rows: auto auto 1fr auto;
+  min-width: 0;
+  overflow: hidden;
+  padding: 16px;
+}
+
+.stage-context .studio-status {
+  inset: auto;
+  position: static;
+  width: fit-content;
+}
+
+.context-block {
+  min-height: 0;
+  overflow: auto;
+  padding: 14px;
+}
+
+.context-block h3 {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.compact-example span {
+  color: var(--accent);
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.compact-example strong {
+  display: block;
+  margin: 6px 0 10px;
+}
+
 @media (max-width: 980px) {
   .hero-content {
     grid-template-columns: 1fr;
@@ -1670,5 +1926,95 @@ main {
 
   .slide-list p {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 980px) {
+  .stage-app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr) minmax(120px, 0.28fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .stage-rail {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 8px;
+  }
+
+  .stage-dot {
+    flex: 0 0 auto;
+    height: 42px;
+    min-width: 88px;
+  }
+
+  .stage-context {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    grid-template-rows: auto;
+    overflow-x: auto;
+  }
+
+  .stage-context .studio-status {
+    display: none;
+  }
+
+  .stage-panel[data-stage="start"],
+  .plan-stage-grid,
+  .fixed-example {
+    grid-template-columns: 1fr;
+  }
+
+  .stage-panel .studio-card {
+    max-height: none;
+  }
+
+  .fixed-example {
+    height: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .studio-body {
+    height: 100dvh;
+  }
+
+  .stage-app {
+    height: 100dvh;
+    grid-template-rows: auto minmax(0, 1fr) 136px;
+  }
+
+  .stage-screen {
+    border-radius: 18px;
+  }
+
+  .stage-panel {
+    padding: 16px;
+    overflow: auto;
+  }
+
+  .stage-panel.active {
+    display: block;
+  }
+
+  .start-copy h1 {
+    font-size: clamp(2.6rem, 14vw, 4rem);
+  }
+
+  .panel-head h2 {
+    font-size: clamp(2rem, 11vw, 3.2rem);
+  }
+
+  .row-head {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .stage-context {
+    grid-template-columns: repeat(3, 220px);
+  }
+
+  .ai-command {
+    grid-template-columns: 1fr;
   }
 }

@@ -4,7 +4,8 @@
     articles: window.CBNStore ? CBNStore.getArticles() : [],
     selected: window.CBNStore ? CBNStore.getSelectedArticles() : [],
     planDraft: window.CBNStore ? CBNStore.getPlanDraft() : null,
-    health: null
+    health: null,
+    stage: "start"
   };
 
   const $ = (selector) => document.querySelector(selector);
@@ -16,9 +17,31 @@
     });
   }
 
-  function jumpTo(selector) {
-    const target = $(selector);
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  const hashStageMap = {
+    top: "start",
+    exampleStep: "example",
+    surveyStep: "survey",
+    articleStep: "articles",
+    planStep: "plan",
+    feedbackStep: "feedback",
+    gradeStep: "grade"
+  };
+
+  function setStage(stage, pushHash) {
+    state.stage = stage || "start";
+    $$(".stage-panel").forEach(function (panel) {
+      panel.classList.toggle("active", panel.dataset.stage === state.stage);
+    });
+    $$(".stage-dot").forEach(function (dot) {
+      dot.classList.toggle("active", dot.dataset.stageTarget === state.stage);
+    });
+    document.body.dataset.activeStage = state.stage;
+    if (pushHash !== false) {
+      const hash = Object.keys(hashStageMap).find(function (key) {
+        return hashStageMap[key] === state.stage;
+      });
+      if (hash) history.replaceState(null, "", "#" + hash);
+    }
   }
 
   function setBusy(button, isBusy, label) {
@@ -224,7 +247,7 @@
       };
       CBNStore.setSurvey(state.survey);
       summarizeSurvey();
-      jumpTo("#articleStep");
+      setStage("articles");
     });
   }
 
@@ -266,7 +289,7 @@
         state.planDraft = data;
         CBNStore.setPlanDraft(data);
         renderPlan(data);
-        jumpTo("#feedbackStep");
+        setStage("feedback");
       } catch (error) {
         $("#studioPlanOutput").innerHTML = '<div class="empty-state error-state"><strong>Plan failed</strong><p>' + escapeHtml(error.message) + "</p></div>";
       } finally {
@@ -288,7 +311,7 @@
           userText: $("#studioFeedbackPrompt").value
         });
         renderFeedback(data);
-        jumpTo("#gradeStep");
+        setStage("grade");
       } catch (error) {
         $("#studioFeedbackOutput").innerHTML = '<div class="empty-state error-state"><strong>Feedback failed</strong><p>' + escapeHtml(error.message) + "</p></div>";
       } finally {
@@ -339,7 +362,15 @@
 
   document.addEventListener("click", function (event) {
     const jump = event.target.closest("[data-jump]");
-    if (jump) jumpTo(jump.getAttribute("data-jump"));
+    if (jump) {
+      const target = jump.getAttribute("data-jump").replace("#", "");
+      setStage(hashStageMap[target] || target);
+    }
+
+    const stageTarget = event.target.closest("[data-stage-target]");
+    if (stageTarget) {
+      setStage(stageTarget.getAttribute("data-stage-target"));
+    }
 
     const select = event.target.closest("[data-select-article]");
     if (select) {
@@ -365,4 +396,5 @@
   wireAiForms();
   summarizeSurvey();
   renderArticles();
+  setStage(hashStageMap[window.location.hash.replace("#", "")] || "start", false);
 })();
