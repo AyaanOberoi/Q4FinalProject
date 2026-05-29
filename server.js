@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const { runCbnAi } = require("./lib/cbn-ai-core");
 
 const PORT = Number(process.env.PORT || 8080);
 const ROOT = __dirname;
@@ -204,6 +205,26 @@ async function handleArticleChat(req, res) {
   }
 }
 
+async function handleCbnAi(req, res) {
+  let payload;
+  try {
+    payload = JSON.parse(await readBody(req));
+  } catch (error) {
+    sendJson(res, 400, { error: "Invalid request", message: "The request body could not be read as JSON." });
+    return;
+  }
+
+  try {
+    const result = await runCbnAi(payload);
+    sendJson(res, result.status, result.payload);
+  } catch (error) {
+    sendJson(res, 500, {
+      error: "Network or server failure",
+      message: error.message || "The AI coach could not complete the request."
+    });
+  }
+}
+
 function serveStatic(req, res) {
   const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
   let pathname = decodeURIComponent(url.pathname);
@@ -232,6 +253,11 @@ function serveStatic(req, res) {
 const server = http.createServer((req, res) => {
   if (req.method === "POST" && req.url === "/api/article-chat") {
     handleArticleChat(req, res);
+    return;
+  }
+
+  if (req.method === "POST" && req.url === "/api/cbn-ai") {
+    handleCbnAi(req, res);
     return;
   }
 

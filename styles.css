@@ -1144,6 +1144,398 @@ main {
   flex: 1 0 auto;
 }
 
+.studio-body {
+  background:
+    linear-gradient(180deg, rgba(8, 10, 13, 0.55), #080a0d 46%),
+    radial-gradient(900px 480px at 70% 8%, rgba(61, 214, 200, 0.14), transparent 60%),
+    radial-gradient(760px 460px at 20% 24%, rgba(244, 185, 66, 0.1), transparent 60%),
+    #080a0d;
+}
+
+.studio-body .site-nav-wrap,
+.studio-body .footer {
+  display: none;
+}
+
+.studio {
+  overflow: hidden;
+}
+
+.studio-hero {
+  align-items: center;
+  display: grid;
+  min-height: 100vh;
+  padding: 36px min(6vw, 72px);
+  position: relative;
+}
+
+#studioHeroCanvas {
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+.hero-shade {
+  background:
+    linear-gradient(90deg, rgba(8, 10, 13, 0.94), rgba(8, 10, 13, 0.54) 44%, rgba(8, 10, 13, 0.18)),
+    linear-gradient(0deg, #080a0d 0%, transparent 28%);
+  inset: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.studio-hero-content {
+  max-width: 780px;
+  position: relative;
+  z-index: 2;
+}
+
+.studio-hero h1 {
+  font-size: clamp(3.25rem, 8vw, 7.8rem);
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+  margin-bottom: 22px;
+}
+
+.studio-hero p:not(.eyebrow) {
+  color: rgba(242, 246, 250, 0.78);
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  max-width: 650px;
+}
+
+.studio-status {
+  background: rgba(61, 214, 200, 0.12);
+  border: 1px solid rgba(61, 214, 200, 0.35);
+  border-radius: 999px;
+  bottom: 32px;
+  color: var(--primary);
+  font-weight: 800;
+  padding: 10px 14px;
+  position: absolute;
+  right: min(6vw, 72px);
+  z-index: 3;
+}
+
+.studio-status.is-warn {
+  background: rgba(244, 185, 66, 0.12);
+  border-color: rgba(244, 185, 66, 0.35);
+  color: var(--accent);
+}
+
+.studio-section {
+  margin: 0 auto;
+  padding: 96px min(6vw, 72px);
+  width: min(1440px, 100%);
+}
+
+.studio-section-head {
+  margin-bottom: 34px;
+  max-width: 840px;
+}
+
+.studio-section-head h2,
+.workspace-head h2 {
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+  margin-bottom: 16px;
+}
+
+.studio-section-head p,
+.workspace-head p {
+  color: rgba(242, 246, 250, 0.7);
+  font-size: 1.05rem;
+  max-width: 720px;
+}
+
+.example-showcase {
+  min-height: 100vh;
+}
+
+.example-stage {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: 24px;
+}
+
+.example-copy,
+.studio-card,
+.ai-workspace,
+.sample-deck-viewer {
+  background: rgba(18, 24, 31, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 18px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+}
+
+.example-copy {
+  padding: 30px;
+}
+
+.score-mark {
+  color: var(--accent);
+  display: block;
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  margin-bottom: 22px;
+}
+
+.example-copy h3 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.example-copy p {
+  color: rgba(242, 246, 250, 0.72);
+}
+
+.studio-card {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 28px;
+}
+
+.studio-card .span-2 {
+  grid-column: 1 / -1;
+}
+
+.survey-studio-form input,
+.survey-studio-form textarea,
+.survey-studio-form select,
+.ai-command textarea,
+.grade-upload textarea {
+  background: rgba(5, 7, 10, 0.68);
+  border-radius: 12px;
+}
+
+.studio-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.fullscreen-workspace {
+  min-height: 100vh;
+}
+
+.workspace-head {
+  align-items: end;
+  display: flex;
+  gap: 22px;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.ai-workspace {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.34fr) minmax(0, 1fr);
+  min-height: 72vh;
+  overflow: hidden;
+}
+
+.ai-workspace.solo-workspace {
+  grid-template-columns: 1fr;
+}
+
+.workspace-sidebar {
+  background: rgba(255, 255, 255, 0.035);
+  border-right: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 24px;
+}
+
+.workspace-sidebar h3 {
+  font-size: 1rem;
+  margin: 0 0 14px;
+}
+
+.workspace-sidebar label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.workspace-main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+  padding: 24px;
+}
+
+.ai-command {
+  align-items: end;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 18px;
+}
+
+.ai-command textarea {
+  margin: 0;
+  min-height: 92px;
+}
+
+.ai-output {
+  background: rgba(5, 7, 10, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  min-height: 420px;
+  overflow: auto;
+  padding: 18px;
+}
+
+.studio-summary,
+.selected-tray {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.studio-summary div,
+.selected-tray article {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.studio-summary span,
+.selected-tray span {
+  color: var(--muted);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.studio-summary strong,
+.selected-tray strong {
+  display: block;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+
+.article-grid-large {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.article-card-large {
+  background: rgba(18, 24, 31, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.article-card-large.is-selected {
+  border-color: rgba(244, 185, 66, 0.72);
+  box-shadow: 0 0 0 1px rgba(244, 185, 66, 0.2), 0 16px 42px rgba(244, 185, 66, 0.08);
+}
+
+.article-card-large h3 {
+  font-size: 1.3rem;
+  line-height: 1.15;
+}
+
+.article-card-large p {
+  color: rgba(242, 246, 250, 0.75);
+}
+
+.ai-response {
+  display: grid;
+  gap: 18px;
+}
+
+.ai-response h3 {
+  font-size: clamp(1.55rem, 3vw, 2.4rem);
+  line-height: 1.08;
+}
+
+.ai-response h4 {
+  color: var(--accent);
+  margin: 8px 0 0;
+}
+
+.response-grid,
+.slide-plan-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.response-grid article,
+.slide-plan-grid article {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.response-grid p,
+.slide-plan-grid p,
+.ai-response li {
+  color: rgba(242, 246, 250, 0.76);
+}
+
+.verdict,
+.score-pill {
+  background: rgba(61, 214, 200, 0.12);
+  border: 1px solid rgba(61, 214, 200, 0.28);
+  border-radius: 999px;
+  color: var(--primary);
+  display: inline-flex;
+  font-weight: 900;
+  padding: 8px 12px;
+  width: fit-content;
+}
+
+.grade-upload {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.file-drop {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px dashed rgba(61, 214, 200, 0.42);
+  border-radius: 16px;
+  cursor: pointer;
+  display: grid;
+  gap: 6px;
+  padding: 24px;
+}
+
+.file-drop input {
+  display: none;
+}
+
+.file-drop span {
+  font-size: 1.2rem;
+}
+
+.file-drop small {
+  color: var(--muted);
+}
+
+.loading-panel {
+  align-items: center;
+  color: var(--primary);
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 900;
+  justify-content: center;
+  min-height: 240px;
+}
+
+.error-state {
+  border-color: rgba(244, 185, 66, 0.45);
+}
+
 @media (max-width: 980px) {
   .hero-content {
     grid-template-columns: 1fr;
@@ -1159,8 +1551,29 @@ main {
   .finder-shell,
   .finder-hero,
   .planner-grid,
-  .sample-deck-section {
+  .sample-deck-section,
+  .example-stage,
+  .studio-card,
+  .ai-workspace,
+  .article-grid-large,
+  .response-grid,
+  .slide-plan-grid,
+  .ai-command {
     grid-template-columns: 1fr;
+  }
+
+  .studio-card .span-2 {
+    grid-column: auto;
+  }
+
+  .workspace-head {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .workspace-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
   }
 
   .finder-hero .flow-steps {
@@ -1219,6 +1632,32 @@ main {
 
   .chat-log {
     min-height: 280px;
+  }
+
+  .studio-hero,
+  .studio-section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .studio-hero h1 {
+    font-size: clamp(3rem, 16vw, 4.6rem);
+  }
+
+  .studio-status {
+    bottom: 16px;
+    left: 18px;
+    right: auto;
+  }
+
+  .workspace-main,
+  .workspace-sidebar,
+  .studio-card {
+    padding: 16px;
+  }
+
+  .ai-output {
+    min-height: 360px;
   }
 
   .slide-list article {

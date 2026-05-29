@@ -1,21 +1,22 @@
 # Business News Project Coach
 
-A multi-page site for the Q4 current business news presentation. Students complete an interest survey, use an AI-backed article finder, select article candidates, build a planning scaffold, and grade their deck against the rubric. The grade page includes a baked-in 100-point sample PowerPoint.
+A one-page AI studio for the Q4 current business news presentation. Students move through a cinematic home flow: survey, article finder, vibe/plan builder, feedback coach, and PDF deck grader. The 100-point Cowboys Chiefs CBN example is built into the home page.
 
 ## Pages
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Hub with shortcuts |
-| `survey.html` | Interest survey that saves student preferences locally |
-| `article-chat.html` | AI article finder backed by `POST /api/article-chat` |
+| `index.html` | Main one-page CBN AI Studio |
+| `survey.html` | Redirects into the one-page survey section |
+| `article-chat.html` | Redirects into the one-page article finder |
+| `api/cbn-ai.js` | Unified AI endpoint for article search, planning, feedback, and PDF grading |
 | `api/health.js` | Safe setup check for whether server-side AI is configured |
 | `guide.html` | Rubric weights + Slide 1–7 map + visual tips |
-| `plan-ai.html` | Planning workspace using selected articles |
-| `grade-deck.html` | Heuristic scorer + baked-in 100-point sample deck |
+| `plan-ai.html` | Redirects into the one-page planning section |
+| `grade-deck.html` | Redirects into the one-page PDF grader |
 | `teacher-notes.html` | Logistics / sensitivity playbook (edit freely) |
 
-Shared chrome loads from `partials/nav.html` via `js/site.js`. Student survey/chat selections are stored in `localStorage`.
+Student survey, article, and plan selections are stored in `localStorage`.
 
 ## Run locally
 
@@ -28,7 +29,7 @@ OPENAI_API_KEY="your_key_here" npm start
 
 Browse `http://localhost:8080/`.
 
-Without `OPENAI_API_KEY`, the app still loads. The article finder shows an **AI setup needed** banner and does not pretend live search worked.
+Without `OPENAI_API_KEY`, the app still loads. AI actions return a setup message and do not pretend live search or grading worked.
 
 ## Deploy
 
@@ -53,6 +54,6 @@ vercel --prod
 
 ## AI behavior
 
-The browser never sees the OpenAI API key. `server.js` locally and `api/article-chat.js` on Vercel call OpenAI's Responses API with web search enabled and ask for structured JSON article cards or planning guidance.
+The browser never sees the OpenAI API key. `server.js` locally and `api/cbn-ai.js` on Vercel call OpenAI's Responses API. Article search uses web search; PDF grading sends a base64 PDF file input to the server-side API.
 
 Treat every AI citation as provisional until corroborated with the original article, data source, or MLA citation tool.

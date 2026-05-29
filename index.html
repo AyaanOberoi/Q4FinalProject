@@ -3,86 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Business News Project Coach</title>
+  <title>CBN AI Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-page="home">
-  <div class="site-nav-wrap">
-    <div id="nav-root" class="page-shell"></div>
-  </div>
-
-  <header class="hero app-landing">
-    <div class="hero-content page-shell">
-      <div>
-        <p class="eyebrow">Q4 current business news</p>
-        <h1>Plan a CBN topic that is current, credible, and presentation-ready.</h1>
-        <p class="hero-copy">
-          Start with your interests, let the article finder narrow the news, select the strongest options,
-          then build a slide plan that still leaves the real thinking, writing, and presenting in your hands.
+<body data-page="studio" class="studio-body">
+  <main class="studio">
+    <section class="studio-hero" id="top">
+      <canvas id="studioHeroCanvas" aria-hidden="true"></canvas>
+      <div class="hero-shade"></div>
+      <div class="studio-hero-content">
+        <p class="eyebrow">Current Business News AI Studio</p>
+        <h1>Build a CBN that feels sharp before you ever open PowerPoint.</h1>
+        <p>
+          Find your topic, choose credible articles, shape the vibe, pressure-test weak ideas,
+          and grade a PDF export of your deck with AI feedback.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="survey.html">Start the survey</a>
-          <a class="button secondary" href="article-chat.html">Open article finder</a>
-          <a class="button ghost" href="guide.html">Read the rubric</a>
+          <button class="button primary" type="button" data-jump="#surveyStep">Get Started</button>
+          <button class="button secondary" type="button" data-jump="#exampleStep">View 100-point example</button>
         </div>
       </div>
+      <div class="studio-status" id="studioHealth">Checking AI setup...</div>
+    </section>
 
-      <aside class="deadline-card" aria-label="Project essentials">
-        <span class="pill">Workflow</span>
-        <h2>Survey → Finder → Plan → Grade</h2>
-        <div class="timeline-list">
-          <span>01</span><p>Answer the interest survey.</p>
-          <span>02</span><p>Chat until the AI finds 5-10 article candidates.</p>
-          <span>03</span><p>Select articles and shape a theme-backed outline.</p>
-          <span>04</span><p>Check the rubric and study the 100-point sample deck.</p>
+    <section class="studio-section example-showcase" id="exampleStep">
+      <div class="studio-section-head">
+        <p class="eyebrow">Study first</p>
+        <h2>The 100-point CBN example is built in.</h2>
+        <p>Use this as your quality bar: focused story, direct stats, business implications, class connection, questions, citations, and presentation polish.</p>
+      </div>
+      <div class="example-stage">
+        <div class="example-copy">
+          <span class="score-mark">100</span>
+          <h3>Cowboys Chiefs CBN</h3>
+          <p>Presentation matters. The content has to be accurate, but the delivery, visual hierarchy, and audience control are what make it land.</p>
+          <a class="button primary" href="assets/sample-cbn/cowboys-chiefs-cbn-100.pptx" download>Download sample PPTX</a>
         </div>
-      </aside>
-    </div>
-  </header>
+        <div class="sample-deck-viewer panel">
+          <div class="viewer-controls">
+            <button class="button secondary compact" type="button" id="sampleDeckPrev">Previous</button>
+            <span id="sampleDeckCount">-- / --</span>
+            <button class="button secondary compact" type="button" id="sampleDeckNext">Next</button>
+          </div>
+          <div id="sampleDeckTrack" class="sample-deck-track" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
 
-  <main class="page-shell">
-    <div class="card-grid">
-      <a class="card-link" href="survey.html">
-        <span class="card-badge">Start</span>
-        <h3>Interest survey</h3>
-        <p>Capture topics, industries, comfort level, constraints, and source preferences.</p>
-      </a>
-      <a class="card-link" href="article-chat.html">
-        <span class="card-badge">AI search</span>
-        <h3>Article finder</h3>
-        <p>Ask follow-ups, return current article cards, and save the strongest options.</p>
-      </a>
-      <a class="card-link" href="guide.html">
-        <span class="card-badge">Syllabus</span>
-        <h3>Rubric &amp; slide map</h3>
-        <p>Percent weights, Slide 4 quadrants, data rule, neutrality reminders.</p>
-      </a>
-      <a class="card-link" href="plan-ai.html">
-        <span class="card-badge">Prep</span>
-        <h3>Planning workspace</h3>
-        <p>Turn selected articles into a theme, outline, visual ideas, and discussion probes.</p>
-      </a>
-      <a class="card-link" href="grade-deck.html">
-        <span class="card-badge">Review</span>
-        <h3>Grade + sample deck</h3>
-        <p>Check requirements and study the baked-in CBN presentation that earned 100.</p>
-      </a>
-      <a class="card-link" href="teacher-notes.html">
-        <span class="card-badge">Faculty</span>
-        <h3>Teacher notes</h3>
-        <p>Logistics reminders, nuanced expectations, escalation paths.</p>
-      </a>
-    </div>
+    <section class="studio-section" id="surveyStep">
+      <div class="studio-section-head">
+        <p class="eyebrow">Step 1</p>
+        <h2>Tell the AI what you would actually want to present.</h2>
+        <p>The better your preferences, the less random the article search feels.</p>
+      </div>
+      <form class="studio-card survey-studio-form" id="studioSurveyForm" autocomplete="off">
+        <label>
+          Name
+          <input name="name" type="text" placeholder="Ayaan">
+        </label>
+        <label class="span-2">
+          Interests, companies, sports, apps, creators, or trends
+          <textarea name="interests" rows="4" placeholder="NFL media deals, AI chips, TikTok Shop, sneaker resale, fast food pricing..."></textarea>
+        </label>
+        <label>
+          Industries
+          <input name="industriesText" type="text" placeholder="sports business, technology, entertainment">
+        </label>
+        <label>
+          Comfort level
+          <select name="comfort">
+            <option value="safe mainstream topics only">Safe mainstream topics only</option>
+            <option value="okay with policy and controversy if handled neutrally">Policy/controversy is okay if neutral</option>
+            <option value="comfortable with complex global topics">Complex global topics are okay</option>
+          </select>
+        </label>
+        <label>
+          Desired deck vibe
+          <input name="vibe" type="text" placeholder="premium sports broadcast, clean data story, futuristic tech briefing">
+        </label>
+        <label>
+          Topics to avoid
+          <input name="constraints" type="text" placeholder="avoid trauma-heavy stories, opinion columns, no-data topics">
+        </label>
+        <label>
+          Source preference
+          <select name="sourcePreference">
+            <option value="credible mainstream outlets">Credible mainstream outlets</option>
+            <option value="free-to-read outlets preferred">Free-to-read outlets preferred</option>
+            <option value="major business outlets preferred">Major business outlets preferred</option>
+            <option value="sports or culture outlets acceptable if credible">Sports/culture outlets okay if credible</option>
+          </select>
+        </label>
+        <label>
+          Presentation strength you want
+          <select name="presentationStyle">
+            <option value="bold visual theme with audience interaction">Bold visuals + audience interaction</option>
+            <option value="clean professional data story">Clean professional data story</option>
+            <option value="discussion-heavy and debate-friendly">Discussion-heavy</option>
+          </select>
+        </label>
+        <div class="studio-actions span-2">
+          <button class="button primary" type="submit">Save survey and find articles</button>
+          <button class="button ghost" type="button" id="studioReset">Reset studio</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="studio-section fullscreen-workspace" id="articleStep">
+      <div class="workspace-head">
+        <div>
+          <p class="eyebrow">Step 2</p>
+          <h2>Fullscreen article finder</h2>
+          <p>Ask for credible current business-news options. Select the few that feel strongest.</p>
+        </div>
+        <button class="button secondary compact" type="button" data-jump="#planStep">Skip to planning</button>
+      </div>
+      <div class="ai-workspace article-workspace">
+        <aside class="workspace-sidebar">
+          <h3>Your profile</h3>
+          <div id="studioSurveySummary" class="studio-summary"></div>
+          <h3>Selected articles</h3>
+          <div id="studioSelectedTray" class="selected-tray"></div>
+        </aside>
+        <section class="workspace-main">
+          <form class="ai-command" id="studioArticleForm">
+            <textarea id="studioArticlePrompt" rows="3" placeholder="Find 5-10 credible articles for my CBN."></textarea>
+            <button class="button primary" type="submit">Find articles</button>
+          </form>
+          <div class="ai-output" id="studioArticleOutput">
+            <div class="empty-state"><strong>Ready when you are.</strong><p>Click Find articles and the AI will return large readable article cards here.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="studio-section fullscreen-workspace" id="planStep">
+      <div class="workspace-head">
+        <div>
+          <p class="eyebrow">Step 3</p>
+          <h2>Shape the vibe and plan the deck.</h2>
+          <p>Tell the AI the look, hook, theme, class connection, visuals, and discussion energy you want.</p>
+        </div>
+      </div>
+      <div class="ai-workspace">
+        <aside class="workspace-sidebar">
+          <h3>Vibe controls</h3>
+          <label>Visual style<input id="vibeStyle" type="text" placeholder="ESPN broadcast board, clean Apple keynote, cyber newsroom"></label>
+          <label>Class connection idea<input id="vibeConnection" type="text" placeholder="4 P's, supply and demand, market structure..."></label>
+          <label>Audience hook<input id="vibeHook" type="text" placeholder="mini poll, prediction question, reveal stat, prop"></label>
+        </aside>
+        <section class="workspace-main">
+          <form class="ai-command" id="studioPlanForm">
+            <textarea id="studioPlanPrompt" rows="3" placeholder="Help me turn my selected articles into a strong CBN outline and presentation vibe."></textarea>
+            <button class="button primary" type="submit">Generate plan</button>
+          </form>
+          <div class="ai-output" id="studioPlanOutput">
+            <div class="empty-state"><strong>No plan yet.</strong><p>Select articles, describe your vibe, then generate a plan.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="studio-section fullscreen-workspace" id="feedbackStep">
+      <div class="workspace-head">
+        <div>
+          <p class="eyebrow">Step 4</p>
+          <h2>Ask the AI if your idea is actually good.</h2>
+          <p>Use this for class connection, wording, theme, hook, slide order, or visual ideas. It should push back when something is weak.</p>
+        </div>
+      </div>
+      <div class="ai-workspace solo-workspace">
+        <section class="workspace-main">
+          <form class="ai-command" id="studioFeedbackForm">
+            <textarea id="studioFeedbackPrompt" rows="4" placeholder="My class connection is ____. Is that good, or what should I do instead?"></textarea>
+            <button class="button primary" type="submit">Get honest feedback</button>
+          </form>
+          <div class="ai-output" id="studioFeedbackOutput">
+            <div class="empty-state"><strong>Pressure-test an idea.</strong><p>Paste a weak class connection, slide title, hook, or visual plan and the AI will suggest stronger options.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="studio-section fullscreen-workspace" id="gradeStep">
+      <div class="workspace-head">
+        <div>
+          <p class="eyebrow">Step 5</p>
+          <h2>Upload a PDF export and get deck feedback.</h2>
+          <p>Export your presentation as PDF, then let the AI review formatting, wording, visuals, rubric coverage, and presentation polish.</p>
+        </div>
+      </div>
+      <div class="ai-workspace solo-workspace">
+        <section class="workspace-main">
+          <form class="grade-upload" id="studioGradeForm">
+            <label class="file-drop">
+              <input id="deckPdfInput" type="file" accept="application/pdf">
+              <span>Drop or choose your deck PDF</span>
+              <small>PDF is recommended because the AI can inspect visual pages.</small>
+            </label>
+            <textarea id="gradeContext" rows="3" placeholder="Anything the grader should know? Example: I need help with slide 4 and class connection."></textarea>
+            <button class="button primary" type="submit">Grade my PDF</button>
+          </form>
+          <div class="ai-output" id="studioGradeOutput">
+            <div class="empty-state"><strong>No PDF graded yet.</strong><p>Upload the exported PDF when your deck has real slides, not just an outline.</p></div>
+          </div>
+        </section>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer page-shell">
-    <p>Coach site for Honors Business finale presentations.</p>
-    <a href="survey.html">Begin planning</a>
-  </footer>
-
-  <script src="js/site.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="js/studio-hero.js"></script>
+  <script src="js/cbn-storage.js"></script>
+  <script src="js/deck-sample.js"></script>
+  <script src="js/studio.js"></script>
 </body>
 </html>
