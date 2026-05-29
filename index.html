@@ -14,27 +14,43 @@
     <canvas id="studioHeroCanvas" aria-hidden="true"></canvas>
     <div class="stage-vignette"></div>
 
-    <aside class="stage-rail" aria-label="CBN workflow">
-      <button type="button" class="stage-dot active" data-stage-target="start"><span>Start</span></button>
-      <button type="button" class="stage-dot" data-stage-target="survey"><span>Survey</span></button>
-      <button type="button" class="stage-dot" data-stage-target="articles"><span>Articles</span></button>
-      <button type="button" class="stage-dot" data-stage-target="plan"><span>Plan</span></button>
-      <button type="button" class="stage-dot" data-stage-target="feedback"><span>Feedback</span></button>
-      <button type="button" class="stage-dot" data-stage-target="grade"><span>Grade</span></button>
-    </aside>
-
     <section class="stage-screen" aria-live="polite">
       <article class="stage-panel active" data-stage="start" id="top">
         <div class="start-copy">
           <p class="eyebrow">Current Business News AI Studio</p>
-          <h1>Walk in with a CBN that actually presents well.</h1>
+          <h1>Build a CBN presentation that actually feels ready.</h1>
           <p>
-            Pick a credible story, shape the theme, test your class connection, and grade the deck before presentation day.
+            Find the story, get a starter plan, fix weak ideas, and grade the deck before you present.
           </p>
           <div class="hero-actions">
             <button class="button primary" type="button" data-stage-target="survey">Get Started</button>
             <button class="button secondary" type="button" data-stage-target="example">View 100-point example</button>
           </div>
+        </div>
+        <div class="hero-presentation-room" aria-hidden="true">
+          <div class="room-light light-cyan"></div>
+          <div class="room-light light-gold"></div>
+          <div class="presentation-screen">
+            <div class="screen-grid"></div>
+            <span>CBN</span>
+            <strong>LIVE BRIEF</strong>
+            <small>story / business angle / class connection</small>
+            <i class="screen-bar bar-one"></i>
+            <i class="screen-bar bar-two"></i>
+            <i class="screen-bar bar-three"></i>
+            <b>READY</b>
+          </div>
+          <div class="presenter-figure">
+            <i class="presenter-head"></i>
+            <i class="presenter-body"></i>
+            <i class="presenter-arm"></i>
+            <i class="presenter-pointer"></i>
+          </div>
+          <div class="laser-line"></div>
+          <div class="floor-grid"></div>
+          <div class="floating-card card-a"></div>
+          <div class="floating-card card-b"></div>
+          <div class="floating-card card-c"></div>
         </div>
         <div class="example-mini-card">
           <span>100</span>
@@ -96,13 +112,15 @@
             <h2>Find the story.</h2>
             <p>Ask for credible current business-news options, then select the few that feel strongest.</p>
           </div>
-          <button class="button secondary compact" type="button" data-stage-target="plan">Skip to planning</button>
+          <span class="stage-note">Plan unlocks after you select a strong article.</span>
         </div>
         <section class="workspace-main stage-workspace">
+          <div class="starter-direction" id="studioStarterDirection"></div>
           <form class="ai-command" id="studioArticleForm">
             <textarea id="studioArticlePrompt" rows="3" placeholder="Find 5-10 credible articles for my CBN."></textarea>
             <button class="button primary" type="submit">Find articles</button>
           </form>
+          <div class="selected-inline" id="studioSelectedTray"></div>
           <div class="ai-output" id="studioArticleOutput">
             <div class="empty-state"><strong>Ready when you are.</strong><p>Click Find articles and the AI will return large readable article cards here.</p></div>
           </div>
@@ -118,6 +136,7 @@
         <div class="plan-stage-grid">
           <aside class="workspace-sidebar">
             <h3>Vibe controls</h3>
+            <div id="studioSurveySummary" class="studio-summary compact-summary"></div>
             <label>Visual style<input id="vibeStyle" type="text" placeholder="ESPN broadcast board, clean Apple keynote"></label>
             <label>Class connection idea<input id="vibeConnection" type="text" placeholder="4 P's, supply and demand..."></label>
             <label>Audience hook<input id="vibeHook" type="text" placeholder="mini poll, reveal stat, prop"></label>
@@ -128,7 +147,7 @@
               <button class="button primary" type="submit">Generate plan</button>
             </form>
             <div class="ai-output" id="studioPlanOutput">
-              <div class="empty-state"><strong>No plan yet.</strong><p>Select articles, describe your vibe, then generate a plan.</p></div>
+              <div class="empty-state"><strong>Here is what to do next.</strong><p>Your job is to turn the starter direction into your own slides. Ask AI to improve weak parts, but do not copy the outline directly.</p></div>
             </div>
           </section>
         </div>
@@ -170,32 +189,10 @@
       </article>
     </section>
 
-    <aside class="stage-context">
-      <div class="studio-status" id="studioHealth">Checking AI setup...</div>
-      <div class="context-block">
-        <h3>Your profile</h3>
-        <div id="studioSurveySummary" class="studio-summary"></div>
-      </div>
-      <div class="context-block">
-        <h3>Selected articles</h3>
-        <div id="studioSelectedTray" class="selected-tray"></div>
-      </div>
-      <div class="context-block compact-example">
-        <span>100-point sample</span>
-        <strong>Cowboys Chiefs CBN</strong>
-        <button class="text-button" type="button" data-stage-target="example">Open example</button>
-      </div>
-    </aside>
+    <footer class="stage-next-strip" id="stageNextStrip" aria-live="polite"></footer>
   </main>
 
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-      }
-    }
-  </script>
-  <script type="module" src="js/studio-hero.js"></script>
+  <script src="js/studio-hero.js"></script>
   <script src="js/cbn-storage.js"></script>
   <script src="js/deck-sample.js"></script>
   <script src="js/studio.js"></script>
