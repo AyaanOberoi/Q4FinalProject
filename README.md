@@ -56,4 +56,6 @@ vercel --prod
 
 The browser never sees the OpenAI API key. `server.js` locally and `api/cbn-ai.js` on Vercel call OpenAI's Responses API. Article search uses web search; PDF grading sends a base64 PDF file input to the server-side API.
 
+For faster responses, the app uses `OPENAI_FAST_MODEL` when it is set, then `OPENAI_MODEL`, then `gpt-5-mini`. PDF grading can use `OPENAI_DEEP_MODEL` for a stronger model without slowing down normal article search and planning. Article search is intentionally capped to fewer article cards and fewer web-search calls so the UI feels responsive.
+
 Treat every AI citation as provisional until corroborated with the original article, data source, or MLA citation tool.
