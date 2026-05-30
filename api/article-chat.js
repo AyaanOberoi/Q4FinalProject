@@ -30,6 +30,22 @@ function parseModelJson(text) {
   return JSON.parse(candidate);
 }
 
+function articleSearchFallback(text) {
+  const message = String(text || "").trim();
+  return {
+    assistantMessage: message
+      ? "The AI searched, but its answer came back as plain text. Try again with one specific company, industry, product, sport, creator, or trend."
+      : "The AI did not return usable article cards. Add one specific topic and try again.",
+    needsMoreInfo: true,
+    followUpQuestions: [
+      "What company, industry, product, sport, creator, or trend do you want to present?",
+      "Should the story focus on money, marketing, technology, ethics, competition, or policy?"
+    ],
+    articles: [],
+    rawNote: message.slice(0, 1200)
+  };
+}
+
 function buildSystemPrompt(mode) {
   const shared =
     "You are a careful high school Current Business News planning coach. Keep the student objective, cite sources, avoid invented links, and prioritize credible journalism. The project needs seven slides: article info, summary, background/context, implications for US economy/policy/global/classmates, business class concept, 2-3 discussion questions, and MLA works cited. Quantitative evidence beyond a stock chart is required.";
@@ -109,6 +125,24 @@ module.exports = async function handler(req, res) {
     null,
     2
   );
+  const requestBody = {
+    model: process.env.OPENAI_MODEL || "gpt-5",
+    instructions: buildSystemPrompt(mode),
+    reasoning: { effort: "low" },
+    input
+  };
+
+  if (mode === "article") {
+    requestBody.tools = [{ type: "web_search" }];
+    requestBody.tool_choice = "auto";
+    requestBody.include = ["web_search_call.action.sources"];
+  } else {
+    requestBody.text = {
+      format: {
+        type: "json_object"
+      }
+    };
+  }
 
   try {
     const openAiResponse = await fetch("https://api.openai.com/v1/responses", {
@@ -117,15 +151,7 @@ module.exports = async function handler(req, res) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`
       },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || "gpt-5",
-        instructions: buildSystemPrompt(mode),
-        reasoning: { effort: "low" },
-        tools: [{ type: "web_search" }],
-        tool_choice: mode === "article" ? "auto" : undefined,
-        include: ["web_search_call.action.sources"],
-        input
-      })
+      body: JSON.stringify(requestBody)
     });
 
     const responseJson = await openAiResponse.json();
@@ -137,7 +163,20 @@ module.exports = async function handler(req, res) {
       return;
     }
 
-    sendJson(res, 200, parseModelJson(extractOutputText(responseJson)));
+    const text = extractOutputText(responseJson);
+    try {
+      sendJson(res, 200, parseModelJson(text));
+    } catch (error) {
+      if (mode === "article") {
+        sendJson(res, 200, articleSearchFallback(text));
+        return;
+      }
+      sendJson(res, 502, {
+        error: "Invalid AI response",
+        message: "The AI answered, but not in the structured format this app expected.",
+        raw: text
+      });
+    }
   } catch (error) {
     sendJson(res, 500, {
       error: "Network or server failure",
